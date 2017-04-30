@@ -1,5 +1,5 @@
-# grun-core
-Run program with resources limits in a sandbox environment
+# grun
+Runner program with resources limits in a sandbox environment
 
 ## Feature
 + [ ] time calculation
