@@ -7,9 +7,11 @@
 
 #include "Limit.h"
 #include "Result.h"
+#include <unistd.h>
 
 class Runner {
 private:
+    int trace(pid_t pid);
 public:
     Limit *limit;
     Result *result;

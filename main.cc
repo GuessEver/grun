@@ -6,15 +6,17 @@ int main() {
     Grun *program = new Grun();
     program->compiler = new Compiler();
     program->runner = new Runner();
-    program->runner->limit = new Limit(100, 1150, 1000);
-    char* argv[] = {(char *) "/home/guessever/test/c1", NULL};
+    program->runner->limit = new Limit(1000, 256 * 1024, 100);
+    char* argv[] = {(char *) "/home/guessever/test/c2", NULL};
     program->runner->args = (char **) argv;
     if (program->runner->run()) {
         LOG("run error");
     }
 
-    LOG("time = %ld MS", program->runner->result->time_used);
-    LOG("memory = %ld KB", program->runner->result->memory_used);
-    LOG("judge_result = %d", program->runner->result->judge_result);
+    if (program->runner->result) {
+        LOG("[result] time = %ld MS", program->runner->result->time_used);
+        LOG("[result] memory = %ld KB", program->runner->result->memory_used);
+        LOG("[result] judge_result = %d", program->runner->result->judge_result);
+    }
     return 0;
 }

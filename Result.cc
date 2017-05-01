@@ -8,45 +8,53 @@
 #include "Grun.h"
 
 /**
- * Initialize data
+ * set time_used and memory_used
  * @param limit
- * @param status
  * @param usage
  */
-Result::Result(Limit *limit, int status, rusage *usage) {
+int Result::set(Limit *limit, rusage *usage) {
     this->time_used = usage->ru_utime.tv_sec * 1000
                         + usage->ru_utime.tv_usec / 1000 // cpu user time
                         + usage->ru_stime.tv_sec * 1000
                         + usage->ru_stime.tv_usec / 1000; // cpu system time
     this->memory_used = usage->ru_maxrss;
+}
 
-    if (WIFSIGNALED(status)) {
-        switch (WTERMSIG(status)) {
-            case SIGXFSZ:
-                this->judge_result = OLE;
-                break;
+/**
+ * set judge_result
+ * @param limit
+ * @param status
+ * @return
+ */
+int Result::set(Limit *limit, int code) {
+    switch (code) {
+        case SIGXFSZ:
+            this->judge_result = OLE;
+            break;
 
-            case SIGSEGV:
-                this->judge_result = MLE;
-                break;
-
-            case SIGALRM:
-            case SIGXCPU:
-                this->judge_result = TLE;
-                break;
-
-            default:
-                this->judge_result = RE;
-                break;
-        }
-    } else {
-        if (this->time_used > limit->time_limit) {
-            this->judge_result = TLE;
-        } else if (this->memory_used > limit->memory_limit) {
+        case SIGSEGV:
             this->judge_result = MLE;
-        } else {
-            this->judge_result = AC;
-        }
+            break;
+
+        case SIGALRM:
+            alarm(0); // clear alarm clock first
+        case SIGKILL:
+        case SIGXCPU:
+            this->judge_result = TLE;
+            break;
+
+        default:
+            this->judge_result = RE;
+            break;
     }
 }
 
+int Result::fix(Limit *limit) {
+    if (this->time_used > limit->time_limit) {
+        this->judge_result = TLE;
+    } else if (this->memory_used > limit->memory_limit) {
+        this->judge_result = MLE;
+    } else {
+        this->judge_result = AC;
+    }
+ }

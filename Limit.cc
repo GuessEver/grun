@@ -8,12 +8,6 @@
 #include <zconf.h>
 #include "Grun.h"
 
-#define SET_LIMIT(LIMIT, R) \
-    if (setrlimit(LIMIT, R)) { \
-        LOG("set " #LIMIT " error"); \
-        return 1; \
-    }
-
 /**
  * Initialize data
  */
@@ -38,13 +32,24 @@ Limit::Limit(unsigned t, unsigned m, unsigned o) {
  * @return int 0 - success
  *             1 - error
  */
+#define SET_LIMIT(LIMIT, R) \
+    if (setrlimit(LIMIT, R)) { \
+        LOG("set " #LIMIT " error"); \
+        return 1; \
+    }
 int Limit::set() {
+    LOG("[limit] time = %d MS", this->time_limit);
+    LOG("[limit] memory = %d KB", this->memory_limit);
+    LOG("[limit] output = %d KB", this->output_limit);
+
     rlimit r;
 
     // set time limit
     r.rlim_cur = (this->time_limit + 1500) / 1000;
     r.rlim_max = r.rlim_cur + 1;
     SET_LIMIT(RLIMIT_CPU, &r);
+    alarm(0);
+    alarm(r.rlim_max + 1);
 
     // set memory limit
     // !!! REMEMBER TO CONVERT `KB` TO `B` HERE !!!
@@ -63,12 +68,9 @@ int Limit::set() {
 
     // set output limit
     // !!! REMEMBER TO CONVERT `KB` TO `B` HERE !!!
-    r.rlim_cur = (this->memory_limit + 1024) * 1024;
+    r.rlim_cur = (this->output_limit + 1024) * 1024;
     r.rlim_max = r.rlim_cur + 1024 * 1024;
     SET_LIMIT(RLIMIT_FSIZE, &r);
-
-    alarm(0);
-    alarm(1);
 
     return 0;
 }
