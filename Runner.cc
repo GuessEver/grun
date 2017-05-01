@@ -1,33 +1,31 @@
 //
-// Created by guessever on 4/30/17.
+// Created by guessever on 5/1/17.
 //
 
-#include "grun.h"
+#include "Runner.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include "Grun.h"
 
-int run(Runner &program) {
+int Runner::run() {
     pid_t pid = fork();
     if (pid < 0) {
     } else if (pid == 0) {
         LOG("starting...");
-        if (set_limit(program.limit)) {
+        if (this->limit->set()) {
             LOG("set_limit error");
             return 1;
         }
 //        freopen("data.in", "r", stdin);
         freopen("data.out", "w", stdout);
-        execv(program.args[0], program.args);
+        execv(this->args[0], this->args);
         _exit(0);
     } else if (pid > 0) {
         int status = -1;
         struct rusage usage;
         wait4(pid, &status, 0, &usage);
-        if (set_result(program.result, program.limit, status, usage)) {
-            LOG("set_result error");
-            return 1;
-        }
+        this->result = new Result(this->limit, status, &usage);
     }
     return 0;
 }

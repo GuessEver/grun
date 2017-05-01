@@ -5,8 +5,8 @@
 #ifndef GRUN_GRUN_H
 #define GRUN_GRUN_H
 
-#include "limit.h"
-#include "result.h"
+#include "Compiler.h"
+#include "Runner.h"
 
 #define DEBUG_MODE
 
@@ -16,12 +16,12 @@
 #define LOG(FORMAT, ...) {}
 #endif
 
-struct Runner {
-    struct Limit limit;
-    struct Result result;
-    char **args;
+class Grun {
+private:
+public:
+    Compiler *compiler;
+    Runner *runner;
 };
 
-int run(Runner &program);
 
 #endif //GRUN_GRUN_H

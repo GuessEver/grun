@@ -1,20 +1,20 @@
 #include <stdio.h>
-#include "grun.h"
+#include "Grun.h"
 
 int main() {
     LOG("You ARE running in DEBUG MOD !");
-    struct Runner program;
-    program.limit.output_limit = 100;
-    program.limit.memory_limit = 1150;
-    program.limit.time_limit = 1000;
+    Grun *program = new Grun();
+    program->compiler = new Compiler();
+    program->runner = new Runner();
+    program->runner->limit = new Limit(100, 1150, 1000);
     char* argv[] = {(char *) "/home/guessever/test/c1", NULL};
-    program.args = (char **) argv;
-    if (run(program)) {
+    program->runner->args = (char **) argv;
+    if (program->runner->run()) {
         LOG("run error");
     }
 
-    LOG("time = %ld MS", program.result.time_used);
-    LOG("memory = %ld KB", program.result.memory_used);
-    LOG("judge_result = %d", program.result.judge_result);
+    LOG("time = %ld MS", program->runner->result->time_used);
+    LOG("memory = %ld KB", program->runner->result->memory_used);
+    LOG("judge_result = %d", program->runner->result->judge_result);
     return 0;
 }

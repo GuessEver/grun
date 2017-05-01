@@ -6,7 +6,7 @@
 #define GRUN_RESULT_H
 
 #include <sys/resource.h>
-#include "limit.h"
+#include "Limit.h"
 
 enum JUDGE_RESULT {
     Pending = 1,    //  1 Pending
@@ -23,11 +23,14 @@ enum JUDGE_RESULT {
 };
 
 struct Result {
+private:
+public:
     long time_used; // in MS
     long memory_used; // in KB
     enum JUDGE_RESULT judge_result;
+    Result();
+    Result(Limit *limit, int status, rusage *usage);
 };
 
-int set_result(Result &result, Limit &limit, int status, rusage &usage);
 
 #endif //GRUN_RESULT_H
