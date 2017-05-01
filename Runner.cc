@@ -8,6 +8,11 @@
 #include <sys/wait.h>
 #include "Grun.h"
 
+/**
+ * Run program
+ * @return int 0 - success
+ *             1 - error
+ */
 int Runner::run() {
     pid_t pid = fork();
     if (pid < 0) {

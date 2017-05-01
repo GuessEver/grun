@@ -7,6 +7,12 @@
 #include "Limit.h"
 #include "Grun.h"
 
+/**
+ * Initialize data
+ * @param limit
+ * @param status
+ * @param usage
+ */
 Result::Result(Limit *limit, int status, rusage *usage) {
     this->time_used = usage->ru_utime.tv_sec * 1000
                         + usage->ru_utime.tv_usec / 1000 // cpu user time

@@ -14,24 +14,30 @@
         return 1; \
     }
 
+/**
+ * Initialize data
+ */
 Limit::Limit() {
     this->time_limit = 1000; // 1000 MS
     this->memory_limit = 256 * 1024; // 256 MB
     this->output_limit = 1024 * 1024; // 1024 MB
 }
-
 Limit::Limit(unsigned t, unsigned m) {
     this->time_limit = t;
     this->memory_limit = m;
     this->output_limit = 1024 * 1024; // 1024 MB
 }
-
 Limit::Limit(unsigned t, unsigned m, unsigned o) {
     this->time_limit = t;
     this->memory_limit = m;
     this->output_limit = o;
 }
 
+/**
+ * setrlimit
+ * @return int 0 - success
+ *             1 - error
+ */
 int Limit::set() {
     rlimit r;
 
