@@ -7,7 +7,7 @@ int main() {
     program->compiler = new Compiler();
     program->runner = new Runner();
     program->runner->limit = new Limit(1000, 256 * 1024, 100);
-    char* argv[] = {(char *) "/home/guessever/test/c2", NULL};
+    char* argv[] = {(char *) "/home/guessever/test/tester", NULL};
     program->runner->args = (char **) argv;
     if (program->runner->run()) {
         LOG("run error");

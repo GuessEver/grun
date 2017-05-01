@@ -11,6 +11,7 @@
  * set time_used and memory_used
  * @param limit
  * @param usage
+ * @return int
  */
 int Result::set(Limit *limit, rusage *usage) {
     this->time_used = usage->ru_utime.tv_sec * 1000
@@ -18,13 +19,14 @@ int Result::set(Limit *limit, rusage *usage) {
                         + usage->ru_stime.tv_sec * 1000
                         + usage->ru_stime.tv_usec / 1000; // cpu system time
     this->memory_used = usage->ru_maxrss;
+    return SUCCESS;
 }
 
 /**
  * set judge_result
  * @param limit
  * @param status
- * @return
+ * @return int
  */
 int Result::set(Limit *limit, int code) {
     switch (code) {
@@ -47,8 +49,14 @@ int Result::set(Limit *limit, int code) {
             this->judge_result = RE;
             break;
     }
+    return SUCCESS;
 }
 
+/**
+ * fix judge result when done
+ * @param limit
+ * @return int
+ */
 int Result::fix(Limit *limit) {
     if (this->time_used > limit->time_limit) {
         this->judge_result = TLE;
@@ -57,4 +65,5 @@ int Result::fix(Limit *limit) {
     } else {
         this->judge_result = AC;
     }
+    return SUCCESS;
  }

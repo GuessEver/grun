@@ -35,7 +35,7 @@ Limit::Limit(unsigned t, unsigned m, unsigned o) {
 #define SET_LIMIT(LIMIT, R) \
     if (setrlimit(LIMIT, R)) { \
         LOG("set " #LIMIT " error"); \
-        return 1; \
+        return SUCCESS; \
     }
 int Limit::set() {
     LOG("[limit] time = %d MS", this->time_limit);
@@ -72,6 +72,6 @@ int Limit::set() {
     r.rlim_max = r.rlim_cur + 1024 * 1024;
     SET_LIMIT(RLIMIT_FSIZE, &r);
 
-    return 0;
+    return SUCCESS;
 }
 
