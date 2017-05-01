@@ -11,6 +11,6 @@ struct Limit {
     unsigned int output_limit; // in KB
 };
 
-int setLimit(struct Limit *limit);
+int set_limit(Limit &limit);
 
 #endif //GRUN_LIMIT_H

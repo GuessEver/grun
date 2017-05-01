@@ -2,9 +2,9 @@
 Runner program with resources limits in a sandbox environment
 
 ## Feature
-+ [ ] time calculation
-+ [ ] memory calculation
-+ [ ] time limit
-+ [ ] memory limit
++ [x] time calculation
++ [x] memory calculation
++ [x] time limit
++ [x] memory limit
 + [ ] io limit
 + [ ] call limit
