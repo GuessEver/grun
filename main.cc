@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Grun.h"
+#include "src/Grun.h"
 
 int main() {
     LOG("You ARE running in DEBUG MOD !");
