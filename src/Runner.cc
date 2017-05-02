@@ -52,6 +52,8 @@ int Runner::run() {
  * @param pid
  * @return int
  */
+#include <syscall.h>
+#include "okcalls64.h"
 int Runner::trace(pid_t pid) {
     int status = -1;
     rusage usage;
@@ -77,12 +79,27 @@ int Runner::trace(pid_t pid) {
             this->result->set(this->limit, &usage);
             return ERROR;
         }
-//        user_regs_struct regs;
-//        if (ptrace(PTRACE_GETREGS, pid, NULL, &regs) == -1) {
-//            LOG("PTRACE_GETREGS error");
-//        }
-//        LOG2(regs.cs);
-//        LOG2(regs.ds);
+
+        // check system call
+        user_regs_struct regs;
+        if (ptrace(PTRACE_GETREGS, pid, NULL, &regs) == -1) {
+            LOG("PTRACE_GETREGS error");
+        }
+        LOG2(regs.orig_rax);
+        bool found = 0;
+        for (int i = 0; i < 265; i++) {
+            if (LANG_CV[i] == regs.orig_rax) {
+                found = 1;
+                break;
+            }
+        }
+        if (!found) {
+            ptrace(PTRACE_KILL, pid, NULL, NULL);
+            this->result->judge_result = RF;
+            this->result->set(this->limit, &usage);
+            return SUCCESS;
+        }
+
 
         // continue but stop when next system call
         ptrace(PTRACE_SYSCALL, pid, NULL, NULL);

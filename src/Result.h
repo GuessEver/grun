@@ -19,7 +19,8 @@ enum JUDGE_RESULT {
     MLE,            //  8 Memory Limit Exceeded
     CE,             //  9 Compilation Error
     RE,             // 10 Runtime Error
-    SE,             // 11 System Error
+    RF,             // 11 Restricted Function Error
+    SE,             // 12 System Error
 };
 
 struct Result {
