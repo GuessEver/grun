@@ -5,7 +5,11 @@
 #ifndef GRUN_GRUN_H
 #define GRUN_GRUN_H
 
+#include <stdio.h>
 #include <iostream>
+#include <string>
+#include <vector>
+#include "Code.h"
 #include "Compiler.h"
 #include "Runner.h"
 
@@ -25,8 +29,12 @@
 class Grun {
 private:
 public:
+    Code* code;
     Compiler *compiler;
     Runner *runner;
+    Grun(std::string path, std::string data_dir, unsigned time_limit, unsigned memory_limit, unsigned output_limit);
+    int prepare();
+    int start();
 };
 
 

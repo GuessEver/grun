@@ -13,7 +13,7 @@
  * @param usage
  * @return int
  */
-int Result::set(Limit *limit, rusage *usage) {
+int Result::set(rusage *usage) {
     this->time_used = usage->ru_utime.tv_sec * 1000
                         + usage->ru_utime.tv_usec / 1000 // cpu user time
                         + usage->ru_stime.tv_sec * 1000

@@ -10,10 +10,18 @@
 #include "Grun.h"
 
 /**
+ * init args with language
+ * @param language
+ */
+Runner::Runner(unsigned time_limit, unsigned memory_limit, unsigned output_limit) {
+    this->limit = new Limit(time_limit, memory_limit, output_limit);
+}
+
+/**
  * Run program
  * @return int
  */
-int Runner::run() {
+int Runner::run(Code* code) {
     pid_t pid = fork();
     if (pid < 0) {
     } else if (pid == 0) {
@@ -34,7 +42,24 @@ int Runner::run() {
         }
 
         // execute
-        execv(this->args[0], this->args);
+        switch (code->language) {
+            case Pascal:
+            case C:
+            case CC:
+                execl("./Main", "./Main", NULL);
+                break;
+            case Java:
+                execl("/opt/jdk1.8.0_77/bin/java", "/opt/jdk1.8.0_77/bin/java", "Main", NULL);
+                break;
+            case Python:
+                execl("/usr/share/python", "/usr/share/python", (char *)code->filename.c_str(), NULL);
+                break;
+            case Lua:
+                execl("/usr/local/bin/lua", "/usr/local/bin/lua", (char *)code->filename.c_str(), NULL);
+                break;
+            default:
+                break;
+        }
         _exit(0);
     } else if (pid > 0) {
         // trace the child process
@@ -69,14 +94,14 @@ int Runner::trace(pid_t pid) {
             LOG("WEXITSTATUS | %d", WEXITSTATUS(status));
             ptrace(PTRACE_KILL, pid, NULL, NULL);
             this->result->set(this->limit, WEXITSTATUS(status));
-            this->result->set(this->limit, &usage);
+            this->result->set(&usage);
             return ERROR;
         }
         if (WIFSIGNALED(status)) {
             LOG("WIFSIGNALED WTERMSIG | %d", WTERMSIG(status));
             ptrace(PTRACE_KILL, pid, NULL, NULL);
             this->result->set(this->limit, WTERMSIG(status));
-            this->result->set(this->limit, &usage);
+            this->result->set(&usage);
             return ERROR;
         }
 
@@ -85,7 +110,7 @@ int Runner::trace(pid_t pid) {
         if (ptrace(PTRACE_GETREGS, pid, NULL, &regs) == -1) {
             LOG("PTRACE_GETREGS error");
         }
-        LOG2(regs.orig_rax);
+
         bool found = 0;
         for (int i = 0; i < 265; i++) {
             if (LANG_CV[i] == regs.orig_rax) {
@@ -96,7 +121,7 @@ int Runner::trace(pid_t pid) {
         if (!found) {
             ptrace(PTRACE_KILL, pid, NULL, NULL);
             this->result->judge_result = RF;
-            this->result->set(this->limit, &usage);
+            this->result->set(&usage);
             return SUCCESS;
         }
 
@@ -104,7 +129,8 @@ int Runner::trace(pid_t pid) {
         // continue but stop when next system call
         ptrace(PTRACE_SYSCALL, pid, NULL, NULL);
     }
-    this->result->set(this->limit, &usage);
+    this->result->set(&usage);
     this->result->fix(this->limit);
     return SUCCESS;
 }
+

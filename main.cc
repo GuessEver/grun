@@ -1,18 +1,16 @@
-#include <stdio.h>
+
 #include "src/Grun.h"
 
 int main() {
-    LOG("You ARE running in DEBUG MOD !");
-    Grun *program = new Grun();
-    program->compiler = new Compiler();
-    program->runner = new Runner();
-    program->runner->limit = new Limit(1000, 256 * 1024, 100);
-    char* argv[] = {(char *) "/home/guessever/test/tester", NULL};
-    program->runner->args = (char **) argv;
-    if (program->runner->run()) {
-        LOG("run error");
-    }
-
+    Grun *program = new Grun(
+            "/home/guessever/test/tester.cpp", // source code file
+            "/home/guessever/abtest", // data directory
+            1000, // time limit (MS)
+            256 * 1024, // memory limit (KB)
+            512 * 1024 // output limit (KB)
+    );
+    program->prepare();
+    program->start();
     if (program->runner->result) {
         LOG("[result] time = %ld MS", program->runner->result->time_used);
         LOG("[result] memory = %ld KB", program->runner->result->memory_used);

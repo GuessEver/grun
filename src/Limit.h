@@ -11,8 +11,6 @@ public:
     unsigned time_limit; // in MS
     unsigned memory_limit; // in KB
     unsigned output_limit; // in KB
-    Limit();
-    Limit(unsigned t, unsigned m);
     Limit(unsigned t, unsigned m, unsigned o);
     int set();
 };
