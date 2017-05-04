@@ -10,7 +10,8 @@
 #include "Grun.h"
 
 /**
- * init args with language
+ * initialize data
+ * @param code
  * @param time_limit
  * @param memory_limit
  * @param output_limit
@@ -21,11 +22,10 @@ Runner::Runner(Code *code, unsigned time_limit, unsigned memory_limit, unsigned 
 }
 
 /**
- * Run program
+ * Run code
  * @param code
  * @param input
- * @param output
- * @return int
+ * @return SUCCESS | ERROR
  */
 int Runner::run(Code *code, const char *input) {
     pid_t pid = fork();
@@ -76,9 +76,9 @@ int Runner::run(Code *code, const char *input) {
 }
 
 /**
- * Trace program
+ * trace program
  * @param pid
- * @return int
+ * @return SUCCESS | ERROR
  */
 int Runner::trace(pid_t pid) {
     int status = -1;

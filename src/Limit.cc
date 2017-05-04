@@ -9,7 +9,10 @@
 #include "Grun.h"
 
 /**
- * Initialize data
+ * initialize data
+ * @param t
+ * @param m
+ * @param o
  */
 Limit::Limit(unsigned t, unsigned m, unsigned o) {
     this->time_limit = t;
@@ -17,16 +20,15 @@ Limit::Limit(unsigned t, unsigned m, unsigned o) {
     this->output_limit = o;
 }
 
-/**
- * setrlimit
- * @return int 0 - success
- *             1 - error
- */
 #define SET_LIMIT(LIMIT, R) \
     if (setrlimit(LIMIT, R)) { \
         LOG("set " #LIMIT " error"); \
         return SUCCESS; \
     }
+/**
+ * setrlimit
+ * @return SUCCESS | ERROR
+ */
 int Limit::set() {
     LOG("[limit] time = %d MS", this->time_limit);
     LOG("[limit] memory = %d KB", this->memory_limit);

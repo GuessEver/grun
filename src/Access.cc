@@ -13,6 +13,10 @@
 #define REG_SYSCALL orig_rax
 #endif
 
+/**
+ * initialize data
+ * @param code
+ */
 Access::Access(Code *code) {
     unsigned *okcall = OKCALL_C;
     switch (code->language) {
@@ -41,6 +45,11 @@ Access::Access(Code *code) {
     }
 }
 
+/**
+ * check whether the current syscall has the access
+ * @param regs
+ * @return SUCCESS | ERROR
+ */
 int Access::check(user_regs_struct *regs) {
     return this->call[regs->REG_SYSCALL];
 }

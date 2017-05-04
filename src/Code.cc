@@ -6,6 +6,11 @@
 #include "Code.h"
 #include "Grun.h"
 
+/**
+ * get extension from filename
+ * @param filename
+ * @return extension
+ */
 const char *getExtension(const char *filename) {
     long len = strlen(filename) - 1;
     for (long i = 0; filename[i]; i++) {
@@ -16,6 +21,10 @@ const char *getExtension(const char *filename) {
     return filename + len + 1;
 }
 
+/**
+ * initialize data
+ * @param path
+ */
 Code::Code(const char *path) {
     this->path = path;
 

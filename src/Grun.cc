@@ -8,6 +8,12 @@
 #include <stdarg.h>
 #include "Grun.h"
 
+/**
+ * execute command use system call
+ * @param fmt
+ * @param ...
+ * @return status code
+ */
 int execute_cmd(const char *fmt, ...) {
     char cmd[512];
 
@@ -21,6 +27,13 @@ int execute_cmd(const char *fmt, ...) {
     return ret;
 }
 
+/**
+ * initialize data
+ * @param path
+ * @param time_limit
+ * @param memory_limit
+ * @param output_limit
+ */
 Grun::Grun(const char *path, unsigned time_limit, unsigned memory_limit, unsigned output_limit) {
     LOG("You ARE running in DEBUG MOD !");
     this->code = new Code(path);
@@ -31,6 +44,11 @@ Grun::Grun(const char *path, unsigned time_limit, unsigned memory_limit, unsigne
     this->runner->result = this->result;
 }
 
+/**
+ * prepare work directory
+ * @param work_dir
+ * @return SUCCESS | ERROR
+ */
 int Grun::prepare(const char *work_dir) {
     this->work_dir = work_dir;
     if (this->clear()) {
@@ -51,6 +69,10 @@ int Grun::prepare(const char *work_dir) {
     return SUCCESS;
 }
 
+/**
+ * call compiler
+ * @return SUCCESS | ERROR
+ */
 int Grun::compile() {
     if (this->compiler->compile(this->code) == ERROR) {
         LOG("compile error");
@@ -59,6 +81,12 @@ int Grun::compile() {
     return SUCCESS;
 }
 
+/**
+ * call runner and judger
+ * @param input
+ * @param output
+ * @return SUCCESS | ERROR
+ */
 int Grun::run(const char *input, const char *output) {
     if (this->runner->run(this->code, input) == ERROR) {
         LOG("run error");
@@ -71,6 +99,10 @@ int Grun::run(const char *input, const char *output) {
     return SUCCESS;
 }
 
+/**
+ * clear work directory
+ * @return SUCCESS | ERROR
+ */
 int Grun::clear() {
     chdir(this->work_dir);
     if (execute_cmd("/bin/rm -rf %s", this->work_dir) != SUCCESS) {

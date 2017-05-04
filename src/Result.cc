@@ -9,9 +9,8 @@
 
 /**
  * set time_used and memory_used
- * @param limit
  * @param usage
- * @return int
+ * @return SUCCESS | ERROR
  */
 int Result::set(rusage *usage) {
     this->time_used = usage->ru_utime.tv_sec * 1000
@@ -25,8 +24,8 @@ int Result::set(rusage *usage) {
 /**
  * set judge_result
  * @param limit
- * @param status
- * @return int
+ * @param code
+ * @return SUCCESS | ERROR
  */
 int Result::set(Limit *limit, int code) {
     switch (code) {
@@ -59,7 +58,7 @@ int Result::set(Limit *limit, int code) {
 /**
  * fix judge result when done
  * @param limit
- * @return int
+ * @return SUCCESS | ERROR
  */
 int Result::fix(Limit *limit) {
     if (this->time_used > limit->time_limit) {

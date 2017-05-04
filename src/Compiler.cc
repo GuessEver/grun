@@ -9,10 +9,21 @@
 #include <sys/user.h>
 #include "Grun.h"
 
+/**
+ * initialize data
+ * @param time_limit
+ * @param memory_limit
+ * @param output_limit
+ */
 Compiler::Compiler(unsigned time_limit, unsigned memory_limit, unsigned output_limit) {
     this->limit = new Limit(time_limit, memory_limit, output_limit);
 }
 
+/**
+ * compile the program
+ * @param code
+ * @return SUCCESS | ERROR
+ */
 int Compiler::compile(Code *code) {
     pid_t pid = fork();
     if (pid < 0) {

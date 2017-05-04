@@ -5,6 +5,11 @@
 #include "Judger.h"
 #include "Grun.h"
 
+/**
+ * judge user output with answer in strict mode
+ * @param answer
+ * @return JUDGE_RESULT
+ */
 JUDGE_RESULT Judger::strict(const char *answer) {
     if (execute_cmd("diff %s %s", answer, "data.out") == SUCCESS) {
         return AC;
