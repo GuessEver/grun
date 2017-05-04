@@ -6,7 +6,11 @@
 #include "Grun.h"
 
 JUDGE_RESULT Judger::strict(const char *answer) {
-    int ret = execute_cmd("diff %s %s", answer, "data.out");
-    if (ret) return WA;
-    return AC;
+    if (execute_cmd("diff %s %s", answer, "data.out") == SUCCESS) {
+        return AC;
+    } else if (execute_cmd("diff -wb %s %s", answer, "data.out") == SUCCESS) {
+        return PE;
+    } else {
+        return WA;
+    }
 }
