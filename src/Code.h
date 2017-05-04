@@ -5,7 +5,6 @@
 #ifndef GRUN_LANGUAGE_H
 #define GRUN_LANGUAGE_H
 
-#include <string>
 #include <vector>
 
 enum Language {
@@ -20,12 +19,12 @@ enum Language {
 class Code {
 private:
 public:
-    std::string path;
+    const char * path;
     Language language;
-    std::string extension;
-    std::string filename;
-    std::string filename2;
-    Code(const char *path);
+    const char * extension;
+    const char * filename;
+    const char * filename2;
+    Code(const char * path);
 };
 
 

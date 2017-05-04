@@ -26,7 +26,7 @@ Runner::Runner(unsigned time_limit, unsigned memory_limit, unsigned output_limit
  * @param output
  * @return int
  */
-int Runner::run(Code* code, const char *input, const char *output) {
+int Runner::run(Code * code, const char * input) {
     pid_t pid = fork();
     if (pid < 0) {
     } else if (pid == 0) {
@@ -54,13 +54,13 @@ int Runner::run(Code* code, const char *input, const char *output) {
                 execl("./Main", "./Main", NULL);
                 break;
             case Java:
-                execl("/opt/jdk1.8.0_77/bin/java", "/opt/jdk1.8.0_77/bin/java", (char *)code->filename2.c_str(), NULL);
+                execl("/opt/jdk1.8.0_77/bin/java", "/opt/jdk1.8.0_77/bin/java", code->filename2, NULL);
                 break;
             case Python:
-                execl("/usr/share/python", "/usr/share/python", (char *)code->filename.c_str(), NULL);
+                execl("/usr/share/python", "/usr/share/python", code->filename, NULL);
                 break;
             case Lua:
-                execl("/usr/local/bin/lua", "/usr/local/bin/lua", (char *)code->filename.c_str(), NULL);
+                execl("/usr/local/bin/lua", "/usr/local/bin/lua", code->filename, NULL);
                 break;
             default:
                 break;

@@ -5,7 +5,6 @@
 #ifndef GRUN_RUNNER_H
 #define GRUN_RUNNER_H
 
-#include <string>
 #include <vector>
 #include <unistd.h>
 #include "Limit.h"
@@ -16,10 +15,10 @@ class Runner {
 private:
     int trace(pid_t pid);
 public:
-    Limit *limit;
-    Result *result;
+    Limit * limit;
+    Result * result;
     Runner(unsigned time_limit, unsigned memory_limit, unsigned output_limit);
-    int run(Code* code, const char *input, const char *output);
+    int run(Code * code, const char * input);
 };
 
 

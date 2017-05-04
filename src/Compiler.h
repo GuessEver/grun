@@ -6,18 +6,16 @@
 #define GRUN_COMPILER_H
 
 #include <vector>
-#include <string>
 #include "Code.h"
 #include "Limit.h"
 
 class Compiler {
 private:
 public:
-    Limit *limit;
-    std::string *info;
-    std::vector<std::string> args;
+    Limit * limit;
+    const char * info;
     Compiler(unsigned time_limit, unsigned memory_limit, unsigned output_limit);
-    int compile(Code* code);
+    int compile(Code * code);
 };
 
 

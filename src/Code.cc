@@ -2,44 +2,45 @@
 // Created by guessever on 5/3/17.
 //
 
-#include <algorithm>
+#include <string.h>
 #include "Code.h"
 #include "Grun.h"
 
-std::string getExtension(std::string &filename) {
-    std::string ext = "";
-    for (std::string::iterator it = filename.end() - 1; it != filename.begin(); it--) {
-        if (*it == '.') {
-            break;
+const char * getExtension(const char * filename) {
+    long len = strlen(filename) - 1;
+    for (long i = 0; filename[i]; i++) {
+        if (filename[i] == '.') {
+            len = i;
         }
-        ext = (*it) + ext;
     }
-    return ext;
+    return filename + len + 1;
 }
 
-Code::Code(const char *path) {
-    this->path = std::string(path);
+Code::Code(const char * path) {
+    this->path = path;
 
-    std::string ext = getExtension(this->path);
-    if (ext == "pas") {
+    const char * ext = getExtension(this->path);
+    if (!strcmp(ext, "pas")) {
         this->language = Pascal;
         this->extension = "pas";
-    } else if (ext == "c") {
+    } else if (!strcmp(ext, "c")) {
         this->language = C;
         this->extension = "c";
-    } else if (ext == "cc" || ext == "cxx" || ext == "cpp") {
+    } else if (!strcmp(ext, "cc") || !strcmp(ext, "cxx") || !strcmp(ext, "cpp")) {
         this->language = CC;
         this->extension = "cc";
-    } else if (ext == "java") {
+    } else if (!strcmp(ext, "java")) {
         this->language = Java;
         this->extension = "java";
-    } else if (ext == "py") {
+    } else if (!strcmp(ext, "py")) {
         this->language = Python;
         this->extension = "py";
-    } else if (ext == "lua") {
+    } else if (!strcmp(ext, "lua")) {
         this->language = Lua;
         this->extension = "lua";
     }
     this->filename2 = "Main";
-    this->filename = this->filename2 + "." + this->extension;
+    char * tmp = new char[255];
+    sprintf(tmp, "%s.%s", this->filename2, this->extension);
+    this->filename = tmp;
 }

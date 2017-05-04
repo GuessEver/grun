@@ -11,7 +11,7 @@
 class Judger {
 private:
 public:
-    JUDGE_RESULT strict(const char *answer);
+    JUDGE_RESULT strict(const char * answer);
 };
 
 
