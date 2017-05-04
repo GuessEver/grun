@@ -13,7 +13,7 @@
  * @param usage
  * @return int
  */
-int Result::set(rusage * usage) {
+int Result::set(rusage *usage) {
     this->time_used = usage->ru_utime.tv_sec * 1000
                         + usage->ru_utime.tv_usec / 1000 // cpu user time
                         + usage->ru_stime.tv_sec * 1000
@@ -28,7 +28,7 @@ int Result::set(rusage * usage) {
  * @param status
  * @return int
  */
-int Result::set(Limit * limit, int code) {
+int Result::set(Limit *limit, int code) {
     switch (code) {
         case SIGXFSZ:
             this->judge_result = OLE;
@@ -57,7 +57,7 @@ int Result::set(Limit * limit, int code) {
  * @param limit
  * @return int
  */
-int Result::fix(Limit * limit) {
+int Result::fix(Limit *limit) {
     if (this->time_used > limit->time_limit) {
         this->judge_result = TLE;
     } else if (this->memory_used > limit->memory_limit) {

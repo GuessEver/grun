@@ -8,7 +8,7 @@
 #include <stdarg.h>
 #include "Grun.h"
 
-int execute_cmd(const char * fmt, ...) {
+int execute_cmd(const char *fmt, ...) {
     char cmd[512];
 
     int ret = 0;
@@ -21,7 +21,7 @@ int execute_cmd(const char * fmt, ...) {
     return ret;
 }
 
-Grun::Grun(const char * path, unsigned time_limit, unsigned memory_limit, unsigned output_limit) {
+Grun::Grun(const char *path, unsigned time_limit, unsigned memory_limit, unsigned output_limit) {
     LOG("You ARE running in DEBUG MOD !");
     this->code = new Code(path);
     this->compiler = new Compiler(10000, 256 * 1024, 512 * 1024);
@@ -50,7 +50,7 @@ int Grun::compile() {
     return 0;
 }
 
-int Grun::run(const char * input, const char * output) {
+int Grun::run(const char *input, const char *output) {
     if (this->runner->run(this->code, input) == ERROR) {
         LOG("run error");
         return ERROR;

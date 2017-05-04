@@ -12,10 +12,10 @@
 class Compiler {
 private:
 public:
-    Limit * limit;
-    const char * info;
+    Limit *limit;
+    const char *info;
     Compiler(unsigned time_limit, unsigned memory_limit, unsigned output_limit);
-    int compile(Code * code);
+    int compile(Code *code);
 };
 
 

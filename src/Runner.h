@@ -15,10 +15,10 @@ class Runner {
 private:
     int trace(pid_t pid);
 public:
-    Limit * limit;
-    Result * result;
+    Limit *limit;
+    Result *result;
     Runner(unsigned time_limit, unsigned memory_limit, unsigned output_limit);
-    int run(Code * code, const char * input);
+    int run(Code *code, const char *input);
 };
 
 

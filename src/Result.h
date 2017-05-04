@@ -29,9 +29,9 @@ public:
     long time_used; // in MS
     long memory_used; // in KB
     enum JUDGE_RESULT judge_result;
-    int set(rusage * usage);
-    int set(Limit * limit, int status);
-    int fix(Limit * limit);
+    int set(rusage *usage);
+    int set(Limit *limit, int status);
+    int fix(Limit *limit);
 };
 
 

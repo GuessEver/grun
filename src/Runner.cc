@@ -26,7 +26,7 @@ Runner::Runner(unsigned time_limit, unsigned memory_limit, unsigned output_limit
  * @param output
  * @return int
  */
-int Runner::run(Code * code, const char * input) {
+int Runner::run(Code *code, const char *input) {
     pid_t pid = fork();
     if (pid < 0) {
     } else if (pid == 0) {

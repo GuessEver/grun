@@ -13,7 +13,7 @@ Compiler::Compiler(unsigned time_limit, unsigned memory_limit, unsigned output_l
     this->limit = new Limit(time_limit, memory_limit, output_limit);
 }
 
-int Compiler::compile(Code * code) {
+int Compiler::compile(Code *code) {
     pid_t pid = fork();
     if (pid < 0) {
     } else if (pid == 0) {

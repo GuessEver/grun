@@ -2,7 +2,7 @@
 #include "src/Grun.h"
 
 int main() {
-    Grun * program = new Grun(
+    Grun *program = new Grun(
             "/home/guessever/test/ab.cpp", // source code file
             1000, // time limit (MS)
             256 * 1024, // memory limit (KB)

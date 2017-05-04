@@ -19,12 +19,12 @@ enum Language {
 class Code {
 private:
 public:
-    const char * path;
+    const char *path;
     Language language;
-    const char * extension;
-    const char * filename;
-    const char * filename2;
-    Code(const char * path);
+    const char *extension;
+    const char *filename;
+    const char *filename2;
+    Code(const char *path);
 };
 
 

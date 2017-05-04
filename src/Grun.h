@@ -25,19 +25,19 @@
 #define SUCCESS 0
 #define ERROR 1
 
-int execute_cmd(const char * fmt, ...);
+int execute_cmd(const char *fmt, ...);
 
 class Grun {
 private:
 public:
-    Code * code;
-    Compiler * compiler;
-    Runner * runner;
-    Judger * judger;
-    Grun(const char * path, unsigned time_limit, unsigned memory_limit, unsigned output_limit);
+    Code *code;
+    Compiler *compiler;
+    Runner *runner;
+    Judger *judger;
+    Grun(const char *path, unsigned time_limit, unsigned memory_limit, unsigned output_limit);
     int prepare();
     int compile();
-    int run(const char * input, const char * output);
+    int run(const char *input, const char *output);
 };
 
 
