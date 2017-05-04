@@ -15,7 +15,8 @@
  * @param memory_limit
  * @param output_limit
  */
-Runner::Runner(unsigned time_limit, unsigned memory_limit, unsigned output_limit) {
+Runner::Runner(Code *code, unsigned time_limit, unsigned memory_limit, unsigned output_limit) {
+    this->access = new Access(code);
     this->limit = new Limit(time_limit, memory_limit, output_limit);
 }
 
@@ -62,8 +63,6 @@ int Runner::run(Code *code, const char *input) {
             case Lua:
                 execl("/usr/local/bin/lua", "/usr/local/bin/lua", code->filename, NULL);
                 break;
-            default:
-                break;
         }
         _exit(0);
     } else if (pid > 0) {
@@ -81,8 +80,6 @@ int Runner::run(Code *code, const char *input) {
  * @param pid
  * @return int
  */
-#include <syscall.h>
-#include "okcalls64.h"
 int Runner::trace(pid_t pid) {
     int status = -1;
     rusage usage;
@@ -114,21 +111,13 @@ int Runner::trace(pid_t pid) {
         if (ptrace(PTRACE_GETREGS, pid, NULL, &regs) == -1) {
             LOG("PTRACE_GETREGS error");
         }
-
-//        bool found = 0;
-//        for (int i = 0; i < 265; i++) {
-//            if (LANG_CV[i] == regs.orig_rax) {
-//                found = 1;
-//                break;
-//            }
-//        }
-//        if (!found) {
-//            ptrace(PTRACE_KILL, pid, NULL, NULL);
-//            this->result->judge_result = RF;
-//            this->result->set(&usage);
-//            return SUCCESS;
-//        }
-
+        if (this->access->check(&regs) == ERROR) {
+            LOG2(regs.orig_rax);
+            ptrace(PTRACE_KILL, pid, NULL, NULL);
+            this->result->judge_result = RF;
+            this->result->set(&usage);
+            return SUCCESS;
+        }
 
         // continue but stop when next system call
         ptrace(PTRACE_SYSCALL, pid, NULL, NULL);

@@ -9,6 +9,7 @@
 #include "Limit.h"
 #include "Result.h"
 #include "Code.h"
+#include "Access.h"
 
 class Runner {
 private:
@@ -16,7 +17,8 @@ private:
 public:
     Limit *limit;
     Result *result;
-    Runner(unsigned time_limit, unsigned memory_limit, unsigned output_limit);
+    Access *access;
+    Runner(Code *code, unsigned time_limit, unsigned memory_limit, unsigned output_limit);
     int run(Code *code, const char *input);
 };
 

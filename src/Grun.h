@@ -23,7 +23,7 @@
 #endif
 
 #define SUCCESS 0
-#define ERROR 1
+#define ERROR -1
 
 int execute_cmd(const char *fmt, ...);
 

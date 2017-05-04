@@ -25,7 +25,7 @@ Grun::Grun(const char *path, unsigned time_limit, unsigned memory_limit, unsigne
     LOG("You ARE running in DEBUG MOD !");
     this->code = new Code(path);
     this->compiler = new Compiler(10000, 256 * 1024, 512 * 1024);
-    this->runner = new Runner(time_limit, memory_limit, output_limit);
+    this->runner = new Runner(this->code, time_limit, memory_limit, output_limit);
     this->result = new Result();
     this->compiler->result = this->result;
     this->runner->result = this->result;

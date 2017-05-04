@@ -38,8 +38,6 @@ int Compiler::compile(Code *code) {
             case Python:
             case Lua:
                 break;
-            default:
-                break;
         }
         _exit(0);
     } else if (pid > 0) {
