@@ -23,6 +23,8 @@ int Compiler::compile(Code *code) {
             return ERROR;
         }
 
+        freopen("compile.out", "w", stderr);
+        freopen("compile.out", "a+", stdout);
         // execute
         switch (code->language) {
             case Pascal:
@@ -43,6 +45,11 @@ int Compiler::compile(Code *code) {
     } else if (pid > 0) {
         int status = -1;
         waitpid(pid, &status, 0);
+
+        FILE *error_file = fopen("compile.out", "r");
+        int cnt = 0;
+        while(cnt < 1000 && fscanf(error_file, "%c", this->info + cnt) != EOF) cnt++;
+
         if (status != SUCCESS) {
             this->result->judge_result = CE;
             return ERROR;

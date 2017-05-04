@@ -18,6 +18,7 @@ public:
     Limit *limit;
     Result *result;
     Access *access;
+    char info[1024] = "";
     Runner(Code *code, unsigned time_limit, unsigned memory_limit, unsigned output_limit);
     int run(Code *code, const char *input);
 };

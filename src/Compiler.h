@@ -14,7 +14,7 @@ private:
 public:
     Limit *limit;
     Result *result;
-    const char *info;
+    char info[1024] = "";
     Compiler(unsigned time_limit, unsigned memory_limit, unsigned output_limit);
     int compile(Code *code);
 };

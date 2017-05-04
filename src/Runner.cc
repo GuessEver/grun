@@ -112,6 +112,7 @@ int Runner::trace(pid_t pid) {
             LOG("PTRACE_GETREGS error");
         }
         if (this->access->check(&regs) == ERROR) {
+            sprintf(this->info, "!!! ERROR !!! calling sys[%lld] restricted", regs.orig_rax);
             LOG2(regs.orig_rax);
             ptrace(PTRACE_KILL, pid, NULL, NULL);
             this->result->judge_result = RF;
