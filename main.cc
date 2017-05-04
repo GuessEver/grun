@@ -9,7 +9,10 @@ int main() {
             512 * 1024 // output limit (KB)
     );
     program->prepare();
-    program->compile();
+    if (program->compile()) {
+        LOG("[result] judge_result = %d", program->result->judge_result);
+        return 0;
+    }
     char *input = new char [255];
     char *output = new char [255];
     for (int i = 0; i < 5; i++) {
@@ -21,11 +24,9 @@ int main() {
             sprintf(output, "/home/guessever/abtest/%03d.ans", i);
         }
         program->run(input, output);
-        if (program->runner->result) {
-            LOG("[result] time = %ld MS", program->runner->result->time_used);
-            LOG("[result] memory = %ld KB", program->runner->result->memory_used);
-            LOG("[result] judge_result = %d", program->runner->result->judge_result);
-        }
+        LOG("[result] time = %ld MS", program->result->time_used);
+        LOG("[result] memory = %ld KB", program->result->memory_used);
+        LOG("[result] judge_result = %d", program->result->judge_result);
     }
     return 0;
 }

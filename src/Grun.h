@@ -34,6 +34,7 @@ public:
     Compiler *compiler;
     Runner *runner;
     Judger *judger;
+    Result *result;
     Grun(const char *path, unsigned time_limit, unsigned memory_limit, unsigned output_limit);
     int prepare();
     int compile();

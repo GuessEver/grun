@@ -5,8 +5,6 @@
 #ifndef GRUN_LANGUAGE_H
 #define GRUN_LANGUAGE_H
 
-#include <vector>
-
 enum Language {
     Pascal = 1,
     C,

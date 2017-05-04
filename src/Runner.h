@@ -5,7 +5,6 @@
 #ifndef GRUN_RUNNER_H
 #define GRUN_RUNNER_H
 
-#include <vector>
 #include <unistd.h>
 #include "Limit.h"
 #include "Result.h"

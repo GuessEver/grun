@@ -45,7 +45,10 @@ int Compiler::compile(Code *code) {
     } else if (pid > 0) {
         int status = -1;
         waitpid(pid, &status, 0);
-        LOG2(status);
+        if (status != SUCCESS) {
+            this->result->judge_result = CE;
+            return ERROR;
+        }
     }
     return SUCCESS;
 }

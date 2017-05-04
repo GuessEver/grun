@@ -35,7 +35,11 @@ int Result::set(Limit *limit, int code) {
             break;
 
         case SIGSEGV:
-            this->judge_result = MLE;
+            if (this->memory_used > limit->memory_limit) {
+                this->judge_result = MLE;
+            } else {
+                this->judge_result = RE;
+            }
             break;
 
         case SIGALRM:

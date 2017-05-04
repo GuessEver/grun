@@ -68,7 +68,6 @@ int Runner::run(Code *code, const char *input) {
         _exit(0);
     } else if (pid > 0) {
         // trace the child process
-        this->result = new Result();
         if (this->trace(pid)) {
             LOG("trace monitor error");
             return ERROR;
