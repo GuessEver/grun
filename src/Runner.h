@@ -19,7 +19,7 @@ public:
     Limit *limit;
     Result *result;
     Runner(unsigned time_limit, unsigned memory_limit, unsigned output_limit);
-    int run(Code* code);
+    int run(Code* code, const char *input, const char *output);
 };
 
 

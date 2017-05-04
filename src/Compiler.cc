@@ -28,9 +28,9 @@ int Compiler::compile(Code* code) {
             case Pascal:
                 execl("/usr/bin/fpc", "/usr/bin/fpc", (char *)code->filename.c_str(), NULL);
             case C:
-                execl("/usr/bin/gcc", "/usr/bin/gcc", (char *)code->filename.c_str(), NULL);
+                execl("/usr/bin/gcc", "/usr/bin/gcc", (char *)code->filename.c_str(), "-o", "Main", NULL);
             case CC:
-                execl("/usr/bin/g++", "/usr/bin/g++", (char *)code->filename.c_str(), NULL);
+                execl("/usr/bin/g++", "/usr/bin/g++", (char *)code->filename.c_str(), "-o", "Main",  NULL);
                 break;
             case Java:
                 execl("/opt/jdk1.8.0_77/bin/javac", "/opt/jdk1.8.0_77/bin/javac", (char *)code->filename.c_str(), NULL);

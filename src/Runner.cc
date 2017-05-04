@@ -11,7 +11,9 @@
 
 /**
  * init args with language
- * @param language
+ * @param time_limit
+ * @param memory_limit
+ * @param output_limit
  */
 Runner::Runner(unsigned time_limit, unsigned memory_limit, unsigned output_limit) {
     this->limit = new Limit(time_limit, memory_limit, output_limit);
@@ -19,9 +21,12 @@ Runner::Runner(unsigned time_limit, unsigned memory_limit, unsigned output_limit
 
 /**
  * Run program
+ * @param code
+ * @param input
+ * @param output
  * @return int
  */
-int Runner::run(Code* code) {
+int Runner::run(Code* code, const char *input, const char *output) {
     pid_t pid = fork();
     if (pid < 0) {
     } else if (pid == 0) {
@@ -32,8 +37,8 @@ int Runner::run(Code* code) {
         }
 
         // redefine input and output
-//        freopen("data.in", "r", stdin);
-//        freopen("data.out", "w", stdout);
+        freopen(input, "r", stdin);
+        freopen("data.out", "w", stdout);
 
         // wait the parent process to trace
         if (ptrace(PTRACE_TRACEME, 0, NULL, NULL) == -1) {
@@ -49,7 +54,7 @@ int Runner::run(Code* code) {
                 execl("./Main", "./Main", NULL);
                 break;
             case Java:
-                execl("/opt/jdk1.8.0_77/bin/java", "/opt/jdk1.8.0_77/bin/java", "Main", NULL);
+                execl("/opt/jdk1.8.0_77/bin/java", "/opt/jdk1.8.0_77/bin/java", (char *)code->filename2.c_str(), NULL);
                 break;
             case Python:
                 execl("/usr/share/python", "/usr/share/python", (char *)code->filename.c_str(), NULL);
@@ -111,19 +116,19 @@ int Runner::trace(pid_t pid) {
             LOG("PTRACE_GETREGS error");
         }
 
-        bool found = 0;
-        for (int i = 0; i < 265; i++) {
-            if (LANG_CV[i] == regs.orig_rax) {
-                found = 1;
-                break;
-            }
-        }
-        if (!found) {
-            ptrace(PTRACE_KILL, pid, NULL, NULL);
-            this->result->judge_result = RF;
-            this->result->set(&usage);
-            return SUCCESS;
-        }
+//        bool found = 0;
+//        for (int i = 0; i < 265; i++) {
+//            if (LANG_CV[i] == regs.orig_rax) {
+//                found = 1;
+//                break;
+//            }
+//        }
+//        if (!found) {
+//            ptrace(PTRACE_KILL, pid, NULL, NULL);
+//            this->result->judge_result = RF;
+//            this->result->set(&usage);
+//            return SUCCESS;
+//        }
 
 
         // continue but stop when next system call

@@ -21,8 +21,9 @@ int execute_cmd(const char * fmt, ...) {
     return ret;
 }
 
-Grun::Grun(std::string path, std::string data_dir, unsigned time_limit, unsigned memory_limit, unsigned output_limit) {
-    this->code = new Code(path, data_dir);
+Grun::Grun(const char *path, unsigned time_limit, unsigned memory_limit, unsigned output_limit) {
+    LOG("You ARE running in DEBUG MOD !");
+    this->code = new Code(path);
     this->compiler = new Compiler(10000, 256 * 1024, 512 * 1024);
     this->runner = new Runner(time_limit, memory_limit, output_limit);
 }
@@ -41,17 +42,24 @@ int Grun::prepare() {
     execute_cmd("/bin/cp %s %s", (char *)this->code->path.c_str(), (char *)this->code->filename.c_str());
 }
 
-
-int Grun::start() {
-    LOG("You ARE running in DEBUG MOD !");
+int Grun::compile() {
     if (this->compiler->compile(this->code) == ERROR) {
         LOG("compile error");
         return ERROR;
     }
-    if (this->runner->run(this->code) == ERROR) {
+    return 0;
+}
+
+int Grun::run(const char *input, const char *output) {
+    if (this->runner->run(this->code, input, output) == ERROR) {
         LOG("run error");
         return ERROR;
     }
-    return SUCCESS;
+    if (this->runner->result->judge_result == AC) {
+        this->judger = new Judger();
+        this->runner->result->judge_result = this->judger->strict(output);
+    }
+    return 0;
 }
+
 

@@ -12,6 +12,7 @@
 #include "Code.h"
 #include "Compiler.h"
 #include "Runner.h"
+#include "Judger.h"
 
 #define DEBUG_MODE
 
@@ -26,15 +27,19 @@
 #define SUCCESS 0
 #define ERROR 1
 
+int execute_cmd(const char * fmt, ...);
+
 class Grun {
 private:
 public:
     Code* code;
     Compiler *compiler;
     Runner *runner;
-    Grun(std::string path, std::string data_dir, unsigned time_limit, unsigned memory_limit, unsigned output_limit);
+    Judger *judger;
+    Grun(const char *path, unsigned time_limit, unsigned memory_limit, unsigned output_limit);
     int prepare();
-    int start();
+    int compile();
+    int run(const char *input, const char *output);
 };
 
 

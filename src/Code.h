@@ -24,9 +24,8 @@ public:
     Language language;
     std::string extension;
     std::string filename;
-    std::string data_dir;
-    std::vector<std::string> data_input, data_output;
-    Code(std::string path, std::string data_dir);
+    std::string filename2;
+    Code(const char *path);
 };
 
 
