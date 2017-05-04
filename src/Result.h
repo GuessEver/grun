@@ -19,7 +19,7 @@ enum JUDGE_RESULT {
     MLE,            //  8 Memory Limit Exceeded
     CE,             //  9 Compilation Error
     RE,             // 10 Runtime Error
-    RF,             // 11 Restricted Function Error
+    RF,             // 11 Restricted Function
     SE,             // 12 System Error
 };
 

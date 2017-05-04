@@ -36,11 +36,11 @@ Access::Access(Code *code) {
     for (int i = 0; i < MAX_CALL_SIZE; i++) {
         this->call[i] = ERROR;
     }
-    for (int i = 0; i == 0 || okcall[i]; i++) {
+    for (int i = 0; okcall[i] < 500; i++) {
         this->call[okcall[i]] = SUCCESS;
     }
 }
 
 int Access::check(user_regs_struct *regs) {
-    return this->call[regs->REG_SYSCALL] == SUCCESS;
+    return this->call[regs->REG_SYSCALL];
 }

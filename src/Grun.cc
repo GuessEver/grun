@@ -4,7 +4,7 @@
 
 #include <sys/stat.h>
 #include <sys/wait.h>
-#include <cstdlib>
+#include <stdlib.h>
 #include <stdarg.h>
 #include "Grun.h"
 
@@ -31,18 +31,24 @@ Grun::Grun(const char *path, unsigned time_limit, unsigned memory_limit, unsigne
     this->runner->result = this->result;
 }
 
-int Grun::prepare() {
-    // change to work directory
-    execute_cmd("/bin/rm -rf %s", "work");
-    if (mkdir("work", 0755)) {
-        LOG("mkdir [work] error");
+int Grun::prepare(const char *work_dir) {
+    this->work_dir = work_dir;
+    if (this->clear()) {
         return ERROR;
     }
-    if (chdir("work")) {
-        LOG("chdir [work] error");
+    if (mkdir(work_dir, 0755)) {
+        LOG("mkdir [%s] error", this->work_dir);
         return ERROR;
     }
-    execute_cmd("/bin/cp %s %s", this->code->path, this->code->filename);
+    if (chdir(this->work_dir)) {
+        LOG("chdir [%s] error", this->work_dir);
+        return ERROR;
+    }
+    if (execute_cmd("/bin/cp %s %s", this->code->path, this->code->filename) != SUCCESS) {
+        LOG("copy code error");
+        return ERROR;
+    }
+    return SUCCESS;
 }
 
 int Grun::compile() {
@@ -50,7 +56,7 @@ int Grun::compile() {
         LOG("compile error");
         return ERROR;
     }
-    return 0;
+    return SUCCESS;
 }
 
 int Grun::run(const char *input, const char *output) {
@@ -62,7 +68,16 @@ int Grun::run(const char *input, const char *output) {
         this->judger = new Judger();
         this->runner->result->judge_result = this->judger->strict(output);
     }
-    return 0;
+    return SUCCESS;
+}
+
+int Grun::clear() {
+    chdir(this->work_dir);
+    if (execute_cmd("/bin/rm -rf %s", this->work_dir) != SUCCESS) {
+        LOG("clear work directory error");
+        return ERROR;
+    }
+    return SUCCESS;
 }
 
 

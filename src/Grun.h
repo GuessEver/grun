@@ -12,7 +12,9 @@
 #include "Runner.h"
 #include "Judger.h"
 
-#define DEBUG_MODE
+//#define DEBUG_MODE
+
+#define INFO(FORMAT, ...) fprintf(stderr, "[INFO] " FORMAT "\n", ##__VA_ARGS__)
 
 #ifdef DEBUG_MODE
 #define LOG(FORMAT, ...) fprintf(stderr, "[LOG] " FORMAT "\n", ##__VA_ARGS__)
@@ -29,6 +31,7 @@ int execute_cmd(const char *fmt, ...);
 
 class Grun {
 private:
+    const char * work_dir;
 public:
     Code *code;
     Compiler *compiler;
@@ -36,9 +39,10 @@ public:
     Judger *judger;
     Result *result;
     Grun(const char *path, unsigned time_limit, unsigned memory_limit, unsigned output_limit);
-    int prepare();
+    int prepare(const char *work_dir);
     int compile();
     int run(const char *input, const char *output);
+    int clear();
 };
 
 
