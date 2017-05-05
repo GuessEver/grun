@@ -3,7 +3,7 @@ dist: trusty
 addons:
   apt:
     sources:
-      - george-edison55-precise-backports
+      - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
     packages:
       - cmake
       - cmake-data
@@ -11,6 +11,17 @@ addons:
 before_install:
   - make -v
   - cmake --version
+#  - git clone https://github.com/Kitware/CMake.git
+#  - cd CMake
+#  - git checkout v3.8.1
+#  - ./bootstrap && make && sudo make install
+#  - cd ..
+  - git clone https://github.com/google/googletest.git
+  - cd googletest
+  - git checkout release-1.8.0
+  - mkdir build && cd build
+  - cmake .. && make && sudo make install
+  - cd ../..
 
 script:
   - mkdir build
