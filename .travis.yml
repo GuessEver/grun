@@ -1,11 +1,17 @@
+dist: trusty
+sudo: required
+
 language: cpp
+
 before_install:
-- make -v
-- cmake --version
+  - sudo apt-get install make cmake
+  - make -v
+  - cmake --version
+
 scripts:
-- mkdir build
-- cd build
-- cmake ..
-- make
-- ./unit_tests
-- ./system_tests
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
+  - ./unit_tests
+  - ./system_tests
