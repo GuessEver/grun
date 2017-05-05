@@ -5,7 +5,7 @@ before_install:
   - make -v
   - cmake --version
 
-scripts:
+script:
   - mkdir build
   - cd build
   - cmake ..
