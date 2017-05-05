@@ -1,7 +1,5 @@
 language: cpp
-compiler: gcc
 before_install:
-- apt install cmake make
 - make -v
 - cmake --version
 scripts:
