@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.0)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${GTK_CFLAGS} -std=c++11)
 
