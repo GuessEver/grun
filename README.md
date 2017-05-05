@@ -1,4 +1,6 @@
 # grun
+[![Build Status](https://travis-ci.org/GuessEver/grun.svg?branch=master)](https://travis-ci.org/GuessEver/grun)
+
 Runner program with resources limits in a sandbox environment
 
 ## Feature

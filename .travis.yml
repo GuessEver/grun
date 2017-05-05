@@ -1,0 +1,13 @@
+language: cpp
+compiler: gcc
+before_install:
+- apt install cmake make
+- make -v
+- cmake --version
+scripts:
+- mkdir build
+- cd build
+- cmake ..
+- make
+- ./unit_tests
+- ./system_tests
