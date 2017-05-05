@@ -94,15 +94,15 @@ int Runner::trace(pid_t pid) {
         if (WEXITSTATUS(status) != SIGTRAP) {
             LOG("WEXITSTATUS | %d", WEXITSTATUS(status));
             ptrace(PTRACE_KILL, pid, NULL, NULL);
-            this->result->set(this->limit, WEXITSTATUS(status));
             this->result->set(&usage);
+            this->result->set(this->limit, WEXITSTATUS(status));
             return ERROR;
         }
         if (WIFSIGNALED(status)) {
             LOG("WIFSIGNALED WTERMSIG | %d", WTERMSIG(status));
             ptrace(PTRACE_KILL, pid, NULL, NULL);
-            this->result->set(this->limit, WTERMSIG(status));
             this->result->set(&usage);
+            this->result->set(this->limit, WTERMSIG(status));
             return ERROR;
         }
 
