@@ -7,10 +7,16 @@ set(LIB_FILES src/Result.cc src/Result.h src/Limit.cc src/Limit.h src/Grun.cc sr
 set(DEMO_FILES main.cc)
 add_executable(grun ${DEMO_FILES} ${LIB_FILES})
 
-project(tests)
 enable_testing()
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
+
+project(system_tests)
 set(TEST_FILES system_tests.cc)
-add_executable(tests ${TEST_FILES} ${LIB_FILES})
-target_link_libraries(tests ${GTEST_LIBRARIES} pthread)
+add_executable(system_tests ${TEST_FILES} ${LIB_FILES})
+target_link_libraries(system_tests ${GTEST_LIBRARIES} pthread)
+
+project(unit_tests)
+set(TEST_FILES unit_tests.cc)
+add_executable(unit_tests ${TEST_FILES} ${LIB_FILES})
+target_link_libraries(unit_tests ${GTEST_LIBRARIES} pthread)
